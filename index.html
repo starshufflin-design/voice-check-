@@ -1,1 +1,313 @@
 
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>不規則星シャッフリン</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;min-height:100vh;
+  font-family:sans-serif;color:#45216b;
+  background:
+    radial-gradient(ellipse at 15% 20%,#fff 0%,transparent 35%),
+    radial-gradient(ellipse at 85% 70%,#e5c8ff 0%,transparent 40%),
+    linear-gradient(135deg,#d0a0e8,#ead7ff,#fff,#d8baff);
+  overflow-x:hidden;
+}
+.stars{
+  position:fixed;inset:0;pointer-events:none;
+  overflow:hidden;z-index:0;
+}
+.star{
+  position:absolute;width:4px;height:4px;
+  border-radius:50%;background:white;
+  box-shadow:0 0 8px #fff,0 0 14px #b76bd3;
+  animation:twinkle 2s infinite alternate,
+           drift 9s ease-in-out infinite alternate;
+}
+.star:nth-child(3n){width:7px;height:7px}
+.star:nth-child(4n){animation-delay:1s}
+@keyframes twinkle{
+  from{opacity:.25;transform:scale(.7)}
+  to{opacity:1;transform:scale(1.4)}
+}
+@keyframes drift{
+  from{translate:-12px 0}
+  to{translate:18px 8px}
+}
+.shooting{
+  position:absolute;width:100px;height:2px;
+  background:linear-gradient(90deg,transparent,#fff,#d9a5ff,transparent);
+  top:22%;left:-120px;
+  transform:rotate(-12deg);
+  animation:shoot 7s linear infinite;
+}
+@keyframes shoot{
+  0%{left:-120px;top:22%;opacity:0}
+  5%{opacity:1}
+  25%{left:110%;top:38%;opacity:0}
+  100%{left:110%;opacity:0}
+}
+main{
+  position:relative;z-index:1;
+  width:min(calc(100% - 32px),480px);
+  margin:auto;padding:40px 0 28px;
+  text-align:center;
+}
+.orb{
+  width:76px;height:76px;margin:0 auto 12px;
+  border-radius:50%;
+  background:radial-gradient(circle at 30% 25%,
+    white,#e8c6ff 35%,#a64ed0 70%,#8c43b1);
+  box-shadow:0 0 25px #c78cf0;
+  animation:float 4s ease-in-out infinite;
+}
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-9px)}
+}
+h1{
+  margin:8px 0;font-size:clamp(27px,7vw,36px);
+  color:#6a1b9a;text-shadow:0 0 16px white;
+}
+.subtitle{margin:0 0 24px;font-size:14px}
+.panel{
+  background:rgba(255,255,255,.9);
+  border:1px solid rgba(255,255,255,.95);
+  border-radius:22px;padding:22px 18px;
+  box-shadow:0 8px 28px #7135a322;
+}
+h2{font-size:19px;margin:0 0 10px}
+p{line-height:1.8}
+.hint{font-size:13px;color:#765e89;margin:9px 0}
+.searchbar{
+  display:flex;align-items:center;gap:10px;
+  width:100%;min-height:58px;padding:6px 8px 6px 18px;
+  border:2px solid #d4a7ed;border-radius:40px;
+  background:#fff;box-shadow:0 4px 18px #a45ac533;
+  transition:.25s;
+}
+.searchbar:focus-within{
+  border-color:#a64ed0;box-shadow:0 0 18px #c78cf0;
+}
+.searchbar input{
+  min-width:0;flex:1;width:100%;
+  border:0;outline:0;background:transparent;
+  font-size:16px;color:#60218a;padding:10px 0;
+}
+.searchbar input::placeholder{color:#7b399b;opacity:1}
+.searchbar button{
+  flex-shrink:0;width:42px;height:42px;
+  border:0;border-radius:50%;background:#8d3fbd;
+  color:white;font-size:19px;cursor:pointer;
+}
+.searchbar button:active{transform:scale(.95)}
+.searchbar button:disabled{opacity:.65}
+.voice-guide{
+  margin:14px 0 0;font-weight:bold;
+  color:#6a1b9a;font-size:15px;
+}
+.action{
+  width:100%;border:0;border-radius:15px;
+  padding:14px 12px;margin-top:10px;
+  font-size:15px;font-weight:bold;cursor:pointer;
+  color:#60218a;background:#f0e2ff;
+}
+.action.primary{
+  color:white;background:linear-gradient(100deg,#8d3fbd,#b76bd3);
+  box-shadow:0 4px 12px #8d3fbd33;
+}
+.action:active{transform:scale(.98)}
+#reply{
+  display:none;text-align:left;margin-top:16px;
+  padding:14px;border-radius:14px;
+  background:#f8f0ff;line-height:1.8;
+  overflow-wrap:anywhere;
+}
+footer{padding:20px 0;font-size:11px;color:#765e89}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important}
+}
+</style>
+</head>
+<body>
+<div class="stars" aria-hidden="true">
+  <i class="star" style="left:8%;top:12%"></i>
+  <i class="star" style="left:22%;top:28%"></i>
+  <i class="star" style="left:82%;top:14%"></i>
+  <i class="star" style="left:91%;top:42%"></i>
+  <i class="star" style="left:12%;top:58%"></i>
+  <i class="star" style="left:75%;top:66%"></i>
+  <i class="star" style="left:44%;top:8%"></i>
+  <i class="star" style="left:56%;top:83%"></i>
+  <i class="star" style="left:30%;top:76%"></i>
+  <i class="star" style="left:96%;top:88%"></i>
+  <i class="star" style="left:63%;top:36%"></i>
+  <i class="star" style="left:4%;top:90%"></i>
+  <div class="shooting"></div>
+</div>
+
+<main>
+  <div class="orb"></div>
+  <h1>不規則星シャッフリン</h1>
+  <p class="subtitle">あなたのアイデアを、一緒に形にしましょう。</p>
+
+  <section class="panel">
+    <h2>こんにちは！</h2>
+    <p>あなたのやりたいことを聞かせてください。</p>
+
+    <div class="searchbar">
+      <input id="message" type="text"
+        placeholder="AIシャッフリンする"
+        aria-label="AIシャッフリンに文字で相談する"
+        onkeydown="if(event.key==='Enter')sendMessage()">
+      <button id="micButton" type="button"
+        aria-label="音声で話しかける"
+        onclick="startVoice()">🎙</button>
+    </div>
+
+    <p class="voice-guide" id="voiceGuide">
+      ここを押して話しかけてください
+    </p>
+    <p class="hint">文字入力にも対応</p>
+
+    <button class="action primary" onclick="startVoice()">
+      🎙️ 音声で話しかける
+    </button>
+    <button class="action" onclick="sendMessage()">
+      文字で送信する
+    </button>
+
+    <div id="reply" role="status" aria-live="polite"></div>
+
+    <p class="hint">どれにしますか？</p>
+    <button class="action" onclick="choose('名刺を作りたい')">
+      名刺を作る
+    </button>
+    <button class="action" onclick="choose('ホームページを作りたい')">
+      ホームページを作る
+    </button>
+    <button class="action" onclick="choose('その他・相談')">
+      その他・相談する
+    </button>
+  </section>
+
+  <footer>不規則星シャッフリン</footer>
+</main>
+
+<script>
+let recognition=null;
+let listening=false;
+
+function setGuide(text){
+  document.getElementById('voiceGuide').textContent=text;
+}
+
+function showReply(text){
+  const box=document.getElementById('reply');
+  box.style.display='block';
+  box.textContent='「'+text+'」ですね！どんなものを作りたいか、もう少し教えてください。';
+}
+
+function choose(text){
+  document.getElementById('message').value=text;
+  showReply(text);
+  speakReply(text+'ですね。どんなものを作りたいか、もう少し教えてください。');
+}
+
+function sendMessage(){
+  const input=document.getElementById('message');
+  const text=input.value.trim();
+  if(!text){
+    input.focus();
+    return;
+  }
+  showReply(text);
+  speakReply(text+'ですね。どんなものを作りたいか、もう少し教えてください。');
+}
+
+function speakReply(text){
+  if(!('speechSynthesis' in window))return;
+
+  window.speechSynthesis.cancel();
+
+  const utterance=new SpeechSynthesisUtterance(text);
+  utterance.lang='ja-JP';
+  utterance.rate=1;
+
+  utterance.onerror=function(){
+    setGuide('返答は表示されました。音声が出ない場合は端末の音量を確認してください。');
+  };
+
+  window.speechSynthesis.speak(utterance);
+}
+
+function startVoice(){
+  if(listening && recognition){
+    try{recognition.stop()}catch(e){}
+    return;
+  }
+
+  const SpeechRecognition=
+    window.SpeechRecognition||window.webkitSpeechRecognition;
+
+  if(!SpeechRecognition){
+    setGuide('このブラウザでは音声入力を利用できません。文字入力をご利用ください。');
+    return;
+  }
+
+  try{
+    recognition=new SpeechRecognition();
+    recognition.lang='ja-JP';
+    recognition.interimResults=false;
+    recognition.continuous=false;
+
+    recognition.onstart=function(){
+      listening=true;
+      document.getElementById('micButton').textContent='⏹';
+      setGuide('🎙️ 聞き取り中です。話しかけてください');
+    };
+
+    recognition.onresult=function(event){
+      const text=event.results[0][0].transcript;
+      document.getElementById('message').value=text;
+      showReply(text);
+      speakReply(text+'ですね。どんなものを作りたいか、もう少し教えてください。');
+    };
+
+    recognition.onerror=function(event){
+      listening=false;
+      document.getElementById('micButton').textContent='🎙';
+
+      if(event.error==='not-allowed' ||
+         event.error==='service-not-allowed'){
+        setGuide('マイクが許可されていません。ブラウザのマイク設定を確認してください。');
+      }else if(event.error==='no-speech'){
+        setGuide('声が聞き取れませんでした。もう一度マイクを押してください。');
+      }else{
+        setGuide('音声入力ができませんでした。もう一度お試しください。');
+      }
+    };
+
+    recognition.onend=function(){
+      listening=false;
+      document.getElementById('micButton').textContent='🎙';
+
+      if(document.getElementById('voiceGuide').textContent.includes('聞き取り中')){
+        setGuide('ここを押して話しかけてください');
+      }
+    };
+
+    recognition.start();
+  }catch(error){
+    listening=false;
+    document.getElementById('micButton').textContent='🎙';
+    setGuide('音声入力を開始できませんでした。ページを開き直してお試しください。');
+  }
+}
+</script>
+</body>
+</html>
+
